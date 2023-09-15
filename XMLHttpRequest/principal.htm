@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+	<TITLE>Usando XMLHttpRequest</TITLE>
+</HEAD>
+
+<BODY>
+	<DIV id="loading"></DIV>
+	<DIV id="urlContent">
+		<a href="#" onclick="alteraURL('pagina.html');">Clique aqui e teste o uso do objeto XMLHttpRequest</a>
+	</DIV>
+</BODY>
+</HTML>
+
+<script language="javascript">
+	var xmlhttpreq = getXmlHttpRequest();
+	
+	function getXmlHttpRequest() 
+	{
+		if (window.XMLHttpRequest) {
+			return new XMLHttpRequest();
+		} else if (window.ActiveXObject) {
+			return new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	}
+
+	function alteraURL(url)
+	{
+		document.getElementById("loading").innerHTML = "<img src='loading.gif'>";
+		xmlhttpreq.open("POST",url,true);
+		xmlhttpreq.onreadystatechange = function(){
+			if (xmlhttpreq.readyState == 4){
+				document.getElementById("urlContent").innerHTML = xmlhttpreq.responseText;
+				document.getElementById("carregando").innerHTML = "";	
+			}
+		}	
+		xmlhttpreq.send(null);
+	}
+</script>
